@@ -1,5 +1,5 @@
-# File_Explorer
-A linux file explorer made in C++ and GTK+
+# File_Manager
+A linux file manager made in C++ and GTK+
 
 v0.1 Features:
 1. Manage Files(Copy, Cut, Paste)
