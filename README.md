@@ -9,5 +9,5 @@ v0.2 Features:
 
 Note: Its an unfinished project, more features will be added in 0.3
 
-# Demo (v0.2)
+# Demo (v0.1)
 https://github.com/SAMANYU07/File_Manager/assets/121656591/c249cc89-6f8d-4e98-873b-732cff4d74a0
