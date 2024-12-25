@@ -247,9 +247,9 @@ class ribbonComponent
                 tempTable = gtk_table_new(4, 4, 0);
                 gtk_table_attach(GTK_TABLE(tempTable), fileName, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
                 gtk_table_attach(GTK_TABLE(tempTable), entry1, 1, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-                gtk_table_attach(GTK_TABLE(tempTable), archivePathLabel, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 10);
-                gtk_table_attach(GTK_TABLE(tempTable), archivePath, 1, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 10);
-                gtk_table_attach(GTK_TABLE(tempTable), browseButton, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 10);
+                // gtk_table_attach(GTK_TABLE(tempTable), archivePathLabel, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 10);
+                // gtk_table_attach(GTK_TABLE(tempTable), archivePath, 1, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 10);
+                // gtk_table_attach(GTK_TABLE(tempTable), browseButton, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 10);
                 gtk_table_attach(GTK_TABLE(tempTable), compressBtn, 0, 2, 3, 4, GTK_FILL, GTK_FILL, 10, 10);
                 gtk_table_attach(GTK_TABLE(tempTable), cancelButton, 2, 4, 3, 4, GTK_FILL, GTK_FILL, 10, 10);
                 g_signal_connect(tempWin, "delete-event", G_CALLBACK(destroyCompressWin), NULL);
