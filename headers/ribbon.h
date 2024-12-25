@@ -220,9 +220,18 @@ class ribbonComponent
         static void convertToTar(GtkWidget *w, gpointer data)
         {
                 compressOutputFileName = gtk_entry_get_text(GTK_ENTRY(entry1));
-                std::string *fileToCompress = static_cast<std::string *>(data);
-                std::cout << "File To Compress: " << *fileToCompress << "\n";
-                // ggh::compressToTarGz(*fileToCompress, )
+                // std::pair<std::string, std::string> *fileDetails = static_cast<std::pair<std::string, std::string>*>(data);
+                // std::string fileToCompress = fileDetails->first;
+                // std::cout << "File To Compress: " << fileToCompress << "\n" << "currentPath: " << ggh::getPathFromFilePath(fileToCompress) << "\n";
+                std::cout << "fileName: " << gtk_entry_get_text(GTK_ENTRY(entry1)) << " path: " << gtk_entry_get_text(GTK_ENTRY(archivePath)) << "\n";
+                std::string fileName = gtk_entry_get_text(GTK_ENTRY(entry1));
+                std::string targetFilePath = gtk_entry_get_text(GTK_ENTRY(archivePath));
+                std::string *inputFileName = static_cast<std::string *>(data);
+                std::cout << "fileName: " << fileName << " path: " << targetFilePath << " inputfilename: " << *(static_cast<std::string *>(data)) << "getfilefromfilepath: " << ggh::getPathFromFilePath(*(static_cast<std::string *>(data))) << "\n";
+                // ggh::compressToTarGz(*fileToCompress, ggh::getPathFromFilePath(*fileToCompress) + );
+                ggh::compressToTarGz(*(static_cast<std::string *>(data)), ggh::getPathFromFilePath(*(static_cast<std::string *>(data))) + "/" + fileName + ".tar.gz");
+                gtk_main_quit();
+                gtk_widget_destroy(tempWin);
         }
         static void compressFile(std::string inputFile)
         {

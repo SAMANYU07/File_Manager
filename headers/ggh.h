@@ -3,6 +3,8 @@
 #include <archive.h>
 #include <archive_entry.h>
 #include <fstream>
+#include <array>
+#include <memory>
 // #include <array>
 
 #pragma once
@@ -146,60 +148,85 @@ public:
         }
         static void compressToTarGz(const std::string &inputFilePath, const std::string &tarGzFilePath)
         {
-                struct archive *archivePtr;
-                struct archive_entry *entry;
-                archivePtr = archive_write_new();
-                archive_write_set_format_pax_restricted(archivePtr);
-                if (archive_write_add_filter_gzip(archivePtr) != ARCHIVE_OK)
-                {
-                        std::cerr << "Error adding gzip filter: " << archive_error_string(archivePtr) << std::endl;
-                        archive_write_free(archivePtr);
-                        return;
-                }
-                if (archive_write_open_filename(archivePtr, tarGzFilePath.c_str()) != ARCHIVE_OK)
-                {
-                        std::cerr << "Error opening output file: " << archive_error_string(archivePtr) << std::endl;
-                        archive_write_free(archivePtr);
-                        return;
-                }
-                entry = archive_entry_new();
-                archive_entry_set_pathname(entry, inputFilePath.c_str());
-                std::ifstream inputFile(inputFilePath, std::ios::binary | std::ios::ate);
-                if (!inputFile)
-                {
-                        std::cerr << "Error opening input file: " << inputFilePath << std::endl;
-                        archive_entry_free(entry);
-                        archive_write_free(archivePtr);
-                        return;
-                }
-                std::streamsize fileSize = inputFile.tellg();
-                archive_entry_set_size(entry, fileSize);
-                archive_entry_set_filetype(entry, AE_IFREG);
-                archive_entry_set_perm(entry, 0644);
-                if (archive_write_header(archivePtr, entry) != ARCHIVE_OK)
-                {
-                        std::cerr << "Error writing header: " << archive_error_string(archivePtr) << std::endl;
-                        archive_entry_free(entry);
-                        archive_write_free(archivePtr);
-                        return;
-                }
-                inputFile.seekg(0);
-                char buffer[8192];
-                while (inputFile)
-                {
-                        inputFile.read(buffer, sizeof(buffer));
-                        std::streamsize bytesRead = inputFile.gcount();
-                        if (bytesRead > 0)
-                        {
-                                archive_write_data(archivePtr, buffer, bytesRead);
-                        }
-                }
-                inputFile.close();
-                archive_entry_free(entry);
-                archive_write_finish_entry(archivePtr);
-                archive_write_close(archivePtr);
-                archive_write_free(archivePtr);
+                // runcomm("tar -czf " + inputFilePath)
+                std::cout << "DEBUG_inputFilePath: " << inputFilePath << "\nDEBUG_tarGzFilePath: " << tarGzFilePath << "\n";
+                // std::cout << "DEBUG_inputFilePath: " << getPathFromFilePath(inputFilePath) << "\nDEBUG_tarGzFilePath: " << tarGzFilePath << "\n";
+                std::cout << "\nRunning command: " << "tar -czf " + tarGzFilePath + " -C " + inputFilePath << "\n";
+                std::cout << "getFileAndPath" << getPathFromFilePath(inputFilePath) << " path: " << getFileFromFilePath(inputFilePath) << "\n";
+                runcomm("tar -czf " + tarGzFilePath + " -C " + getPathFromFilePath(inputFilePath) + " " + getFileFromFilePath(inputFilePath));
+                // runcomm("tar -czf " + tarGzFilePath + " -C " + );
+                // struct archive *archivePtr;
+                // struct archive_entry *entry;
+                // archivePtr = archive_write_new();
+                // archive_write_set_format_pax_restricted(archivePtr);
+                // if (archive_write_add_filter_gzip(archivePtr) != ARCHIVE_OK)
+                // {
+                //         std::cerr << "Error adding gzip filter: " << archive_error_string(archivePtr) << std::endl;
+                //         archive_write_free(archivePtr);
+                //         return;
+                // }
+                // if (archive_write_open_filename(archivePtr, tarGzFilePath.c_str()) != ARCHIVE_OK)
+                // {
+                //         std::cerr << "Error opening output file: " << archive_error_string(archivePtr) << std::endl;
+                //         std::cout << "errorFilePath: " << archivePtr << "\n";
+                //         archive_write_free(archivePtr);
+                //         return;
+                // }
+                // entry = archive_entry_new();
+                // archive_entry_set_pathname(entry, inputFilePath.c_str());
+                // std::ifstream inputFile(inputFilePath, std::ios::binary | std::ios::ate);
+                // if (!inputFile)
+                // {
+                //         std::cerr << "Error opening input file: " << inputFilePath << std::endl;
+                //         archive_entry_free(entry);
+                //         archive_write_free(archivePtr);
+                //         return;
+                // }
+                // std::streamsize fileSize = inputFile.tellg();
+                // archive_entry_set_size(entry, fileSize);
+                // archive_entry_set_filetype(entry, AE_IFREG);
+                // archive_entry_set_perm(entry, 0644);
+                // if (archive_write_header(archivePtr, entry) != ARCHIVE_OK)
+                // {
+                //         std::cerr << "Error writing header: " << archive_error_string(archivePtr) << std::endl;
+                //         archive_entry_free(entry);
+                //         archive_write_free(archivePtr);
+                //         return;
+                // }
+                // inputFile.seekg(0);
+                // char buffer[8192];
+                // while (inputFile)
+                // {
+                //         inputFile.read(buffer, sizeof(buffer));
+                //         std::streamsize bytesRead = inputFile.gcount();
+                //         if (bytesRead > 0)
+                //         {
+                //                 archive_write_data(archivePtr, buffer, bytesRead);
+                //         }
+                // }
+                // inputFile.close();
+                // archive_entry_free(entry);
+                // archive_write_finish_entry(archivePtr);
+                // archive_write_close(archivePtr);
+                // archive_write_free(archivePtr);
 
                 std::cout << "Compressed " << inputFilePath << " to " << tarGzFilePath << std::endl;
+        }
+
+        static std::string getPathFromFilePath(std::string filePath)
+        {
+                for (int i = filePath.size() - 1; i >= 0; i--)
+                {
+                        if (filePath[i] == '/')
+                                return filePath.substr(0, i);
+                }
+        }
+        static std::string getFileFromFilePath(std::string filePath)
+        {
+                for (int i = filePath.size() - 1; i >= 0; i--)
+                {
+                        if (filePath[i] == '/')
+                                return filePath.substr(i + 1);
+                }
         }
 };
