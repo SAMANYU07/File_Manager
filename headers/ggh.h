@@ -230,3 +230,11 @@ public:
                 }
         }
 };
+
+/*
+gst-plugins-good
+gst-plugins-bad (for additional formats)
+gst-plugins-ugly (for less open-source friendly formats)
+gst-libav (optional, includes libav for various codecs)
+command: sudo apt install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-libav
+*/

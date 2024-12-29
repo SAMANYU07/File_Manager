@@ -12,8 +12,12 @@ class videoPlayer
                 {
                         if (targetVideo[i] == '\'')
                                 continue;
-                        temp += targetVideo[i];
+                        else if (targetVideo[i] == ' ')
+                                temp += "%20";
+                        else
+                                temp += targetVideo[i];
                 }
+                std::cout << "updated_path: " << temp << "\n";
                 targetVideo = temp;
                 GtkWidget *win, *videoWidget;
                 GstElement *pipeline;
