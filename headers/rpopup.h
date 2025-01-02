@@ -40,6 +40,11 @@ private:
                 stringToBeSent = "Create File";
                 createNewFolder(NULL);
         }
+        static void openTerminal()
+        {
+                runcomm("konsole --workdir " + currentPath);
+                std::cout << "openTerminal() exec\n";
+        }
         Popup(GtkWidget *widget, GdkEventButton *event, gpointer user_data)
         {
                 // std::cout << "Code to run once\n";
@@ -56,18 +61,22 @@ private:
                         GtkWidget *menuOption2 = gtk_menu_item_new_with_label("Arrange by Date");
                         GtkWidget *menuOption3 = gtk_menu_item_new_with_label("Create New Folder");
                         GtkWidget *menuOption4 = gtk_menu_item_new_with_label("Create New File");
+                        GtkWidget *menuOption5 = gtk_menu_item_new_with_label("Open Terminal here (KDE)");
                         gtk_widget_set_name(menuOption1, "menuOption");
                         gtk_widget_set_name(menuOption2, "menuOption");
                         gtk_widget_set_name(menuOption3, "menuOption");
                         gtk_widget_set_name(menuOption4, "menuOption");
+                        gtk_widget_set_name(menuOption5, "menuOption");
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption1);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption2);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption3);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption4);
+                        gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption5);
                         g_signal_connect(menuOption1, "activate", G_CALLBACK(ArrangeByName), NULL);
                         g_signal_connect(menuOption2, "activate", G_CALLBACK(ArrangeByDate), NULL);
                         g_signal_connect(menuOption3, "activate", G_CALLBACK(menuOption3f), NULL);
                         g_signal_connect(menuOption4, "activate", G_CALLBACK(menuOption4f), NULL);
+                        g_signal_connect(menuOption5, "activate", G_CALLBACK(openTerminal), NULL);
                         g_signal_connect(menu, "deactivate", G_CALLBACK(PopupDelete), NULL);
                         gtk_widget_show_all(menu);
                         gtk_menu_popup_at_pointer(GTK_MENU(menu), (GdkEvent *)event);
