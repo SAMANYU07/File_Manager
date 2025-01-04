@@ -1,5 +1,7 @@
 #include <iostream>
 #include <gtk-3.0/gtk/gtk.h>
+#include "pathRibbon.h"
+#include "navPane.h"
 
 void ffpaneInsert(std::string);
 void createNewFolder(GtkWidget*w);
@@ -13,13 +15,13 @@ private:
         int value;
         static void ArrangeByDate()
         {
-                std::string ffList = runcomm("ls -t " + currentPath);
+                std::string ffList = ggh::runcomm("ls -t " + currentPath);
                 std::cout << "latest curpath: " << currentPath << "\n";
                 ffpaneInsert(ffList);
         }
         static void ArrangeByName()
         {
-                std::string ffList = runcomm("ls " + currentPath);
+                std::string ffList = ggh::runcomm("ls " + currentPath);
 
                 std::cout << "latest curpath: " << currentPath << "\n";
                 ffpaneInsert(ffList);
@@ -42,7 +44,7 @@ private:
         }
         static void openTerminal()
         {
-                runcomm("konsole --workdir " + currentPath);
+                ggh::runcomm("konsole --workdir " + currentPath);
                 std::cout << "openTerminal() exec\n";
         }
         Popup(GtkWidget *widget, GdkEventButton *event, gpointer user_data)

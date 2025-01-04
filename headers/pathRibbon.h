@@ -4,6 +4,8 @@
 #include <vector>
 #include "ggh.h"
 
+#pragma once
+
 GtkWidget *pathRibbon, *backButton, *addressBar, *searchEntry, *searchButton;
 GtkEntryBuffer *addressBarBuffer;
 std::vector<int> slashpos{0, 7};

@@ -11,6 +11,8 @@
 #include <sstream>
 #include <map>
 
+#pragma once
+
 GtkWidget *navPane, *tempelem;
 std::list<std::string> diskNameVector;
 std::map<int, std::string> diskMap;
