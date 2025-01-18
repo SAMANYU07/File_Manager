@@ -74,7 +74,7 @@
         /* border-radius: 10px; */
 }
 #ffbutton:hover {
-        /* background-color: rgb(36, 36, 36); */
+        background-color: rgb(36, 36, 36);
 }
 #ffbutton:active {
         background-color: aqua;

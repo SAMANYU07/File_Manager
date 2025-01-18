@@ -9,6 +9,17 @@
 
 #pragma once
 
+struct GtkButtonWrapper
+{
+        public:
+        GtkButton *button;
+        const gchar *buttonLabel;
+        GtkButtonWrapper(GtkButton *button, const gchar *buttonLabel): button(button), buttonLabel(buttonLabel)
+        {
+                // std::cout << "GtkButtonWrapper-> buttonLabel: " << this->buttonLabel << "\n";
+        }
+};
+
 class ggh
 {
 public:
@@ -72,6 +83,7 @@ public:
         static void on_entering_ffButton(GtkWidget *button, GdkEvent *event, gpointer data)
         {
                 const gchar *new_label = static_cast<const gchar *>(data);
+                // std::cout << "new_label: " << *new_label << "\n";
                 GtkWidget *box = gtk_bin_get_child(GTK_BIN(button));
                 if (GTK_IS_BOX(box))
                 {
@@ -106,6 +118,11 @@ public:
                                 g_list_free(children);
                         }
                 }
+        }
+        static void ffbutton_change_label(GtkWidget *button, GdkEvent *event, gpointer data)
+        {
+                const gchar *old_label = static_cast<const gchar *>(data);
+                std::cout << "old_label: " << old_label << "\n";
         }
         static std::string runcomm(std::string cmd)
         {
@@ -227,6 +244,26 @@ public:
                 {
                         if (filePath[i] == '/')
                                 return filePath.substr(i + 1);
+                }
+        }
+        static void exchangeVisibleAndHiddenLabel(GtkWidget *button)
+        {
+                GtkWidget *buttonBox = gtk_bin_get_child(GTK_BIN(button));
+                if (GTK_IS_BOX(buttonBox))
+                {
+                        GList *children = gtk_container_get_children(GTK_CONTAINER(buttonBox));
+                        if (children != nullptr)
+                        {
+                                GtkWidget *visibleLabel = GTK_WIDGET(g_list_nth_data(children, 1));
+                                GtkWidget *hidden = GTK_WIDGET(g_list_nth_data(children, 2));
+                                if (GTK_IS_LABEL(hidden) && GTK_IS_LABEL(visibleLabel))
+                                {
+                                        const gchar *currentVisibleLabel = g_strdup(gtk_label_get_text(GTK_LABEL(visibleLabel)));
+                                        const gchar *currentHiddenLabel = g_strdup(gtk_label_get_text(GTK_LABEL(hidden)));
+                                        gtk_label_set_text(GTK_LABEL(hidden), currentVisibleLabel);
+                                        gtk_label_set_text(GTK_LABEL(visibleLabel), currentHiddenLabel);
+                                }
+                        }
                 }
         }
 };

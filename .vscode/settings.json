@@ -50,6 +50,10 @@
                 "thread": "cpp",
                 "chrono": "cpp",
                 "ctime": "cpp",
-                "ratio": "cpp"
+                "ratio": "cpp",
+                "compare": "cpp",
+                "concepts": "cpp",
+                "ranges": "cpp",
+                "stop_token": "cpp"
         }
 }

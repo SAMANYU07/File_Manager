@@ -97,6 +97,7 @@ int ffButtonPreProcessing(GtkWidget *w)
         // std::cout << "\nggh::isFile : " << ggh::isFile(targetPath) << "\n";
         // currentPath = targetPath;
         // ffpaneInsert(runcomm("ls " + targetPath));
+        ggh::exchangeVisibleAndHiddenLabel(w);
         const gchar *targetffName = ggh::extractLabelFromButton(w).c_str();
         GtkWidget *ffbuttonbox = gtk_bin_get_child(GTK_BIN(w));
         GList *children = gtk_container_get_children(GTK_CONTAINER(ffbuttonbox));
@@ -106,6 +107,7 @@ int ffButtonPreProcessing(GtkWidget *w)
                 labelWidget = GTK_WIDGET(g_list_nth_data(children, 1));
         }
         const gchar *labelText = gtk_label_get_text(GTK_LABEL(labelWidget));
+        // ggh::exchangeVisibleAndHiddenLabel(w);
         // std::string label = labelText ? labelText : "";
         std::string label;
         if (labelText)
@@ -231,6 +233,7 @@ int ffButtonHoldFunc(GtkWidget *w)
 
 int ffButtonFunc(GtkWidget *w, GdkEventButton *event)
 {
+        // ggh::exchangeVisibleAndHiddenLabel(w);
         if (!ffClicked)
                 return 0;
         if (event->type == GDK_BUTTON_PRESS && event->button == GDK_BUTTON_SECONDARY)
@@ -288,6 +291,7 @@ int ffButtonFunc(GtkWidget *w, GdkEventButton *event)
         }
         else
                 std::cout << "unknown error occured\n";
+        ggh::exchangeVisibleAndHiddenLabel(w);
         return G_SOURCE_REMOVE;
 }
 
@@ -373,9 +377,9 @@ void ffpaneInsert(std::string ffList)
                 std::string truncatedLabel = ffname.substr(0, 10);
                 if (ffname.size() > 10)
                         truncatedLabel += "...";
-                for (int i = 0; i < ffname.size(); i++)
-                        if (i % 10 == 0)
-                                ffname.insert(i, "\n");
+                // for (int i = 0; i < ffname.size(); i++)
+                //         if (i % 10 == 0)
+                //                 ffname.insert(i, "\n");
                 // ffbutton = gtk_button_new_with_label((const gchar *)ffname.c_str());
                 GtkWidget *ffbuttonimage;
                 if (ffname.find('.') != std::string::npos)
@@ -385,10 +389,13 @@ void ffpaneInsert(std::string ffList)
                 ffbutton = gtk_button_new();
                 GtkWidget *ffbuttonlabel = gtk_label_new(truncatedLabel.c_str());
                 GtkWidget *ffbuttonbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+                GtkWidget *hiddenLabel = gtk_label_new(ffname.c_str());
                 gtk_container_add(GTK_CONTAINER(ffbutton), ffbuttonbox);
                 gtk_box_pack_start(GTK_BOX(ffbuttonbox), ffbuttonimage, FALSE, FALSE, 0);
                 gtk_box_pack_start(GTK_BOX(ffbuttonbox), ffbuttonlabel, FALSE, FALSE, 0);
+                gtk_box_pack_start(GTK_BOX(ffbuttonbox), hiddenLabel, FALSE, FALSE, 0);
                 gtk_widget_show_all(ffbutton);
+                gtk_widget_hide(hiddenLabel);
                 gtk_widget_set_name(ffbutton, "ffbutton");
                 gtk_table_attach(GTK_TABLE(ffpane), ffbutton, x, x+1, y, y+1, GTK_FILL, GTK_FILL, 0, 0);
                 if ((x+1) == 10) {
@@ -399,9 +406,10 @@ void ffpaneInsert(std::string ffList)
                 // std::cout << (const gchar *)ffname.c_str() << "\n";
                 // gtk_label_set_line_wrap((GtkLabel*)gtk_button_get_label((GtkButton*)ffbutton), true);
                 gtk_widget_show(ffbutton);
+                gtk_widget_set_tooltip_text(ffbutton, ffname.c_str());
                 gtk_widget_set_size_request(ffbutton, 100, 80);
-                g_signal_connect(ffbutton, "enter-notify-event", G_CALLBACK(ggh::on_entering_ffButton), g_strdup(ffname.c_str()));
-                g_signal_connect(ffbutton, "leave-notify-event", G_CALLBACK(ggh::on_leaving_ffButton), g_strdup(truncatedLabel.c_str()));
+                // g_signal_connect(ffbutton, "enter-notify-event", G_CALLBACK(ggh::on_entering_ffButton), g_strdup(ffname.c_str()));
+                // g_signal_connect(ffbutton, "leave-notify-event", G_CALLBACK(ggh::on_leaving_ffButton), g_strdup(truncatedLabel.c_str()));
                 gtk_widget_set_name(ffbutton, "ffbutton");
                 // g_signal_connect(ffbutton, "button-press-event", G_CALLBACK(Popup::getInstance), ffbutton);
                 g_signal_connect(ffbutton, "clicked", G_CALLBACK(ffClickedF), ffbutton);
