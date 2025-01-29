@@ -638,7 +638,7 @@ int main(int argc, char *argv[])
         gtk_widget_set_size_request(searchButton, 100, 30);
         gtk_widget_set_size_request(scwin2, 1488, 200);
         gtk_widget_show_all(win);
-        gtk_window_set_title(GTK_WINDOW(win), "File Explorer 0.4");
+        gtk_window_set_title(GTK_WINDOW(win), "File Explorer 0.5");
         currentPath = "/'home'/'" + username + "'/";
         ffpaneInsert(runcomm("ls /home/" + username));
         gtk_main();
