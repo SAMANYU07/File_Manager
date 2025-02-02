@@ -2,6 +2,7 @@
 #include <gtk-3.0/gtk/gtk.h>
 #include "pathRibbon.h"
 #include "navPane.h"
+#include "ffbuttonContextMenu.h"
 
 void ffpaneInsert(std::string);
 void createNewFolder(GtkWidget*w);
@@ -89,6 +90,13 @@ public:
         static Popup *getInstance(GtkWidget *widget, GdkEventButton *event, gpointer user_data)
         {
                 sendString = false;
+                if (FfButtonPopupMenu::instance != nullptr)
+                {
+                        gtk_popover_popdown(GTK_POPOVER(popover));
+                        // gtk_widget_destroy(popover);
+                        delete FfButtonPopupMenu::instance;
+                        FfButtonPopupMenu::instance = nullptr;
+                }
                 if (event->type == GDK_BUTTON_PRESS && event->button == GDK_BUTTON_PRIMARY || event->button == GDK_BUTTON_SECONDARY)
                 {
                         delete firstInstance;

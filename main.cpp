@@ -19,6 +19,7 @@
 #include "headers/imageViewer.h"
 #include "headers/videoPlayer.h"
 #include "headers/rpopup.h"
+// #include "headers/ffbuttonContextMenu.h"
 
 GtkWidget *win, *table1, *ribbon, *mypcDropDown, *testButton, *homeBtn, *docBtn, *musicBtn, *videoBtn, *pictureBtn, *temp, *ffpane, *scwin, *ffbutton;
 GtkListBoxRow *navPaneR;
@@ -412,6 +413,7 @@ void ffpaneInsert(std::string ffList)
                 // g_signal_connect(ffbutton, "leave-notify-event", G_CALLBACK(ggh::on_leaving_ffButton), g_strdup(truncatedLabel.c_str()));
                 gtk_widget_set_name(ffbutton, "ffbutton");
                 // g_signal_connect(ffbutton, "button-press-event", G_CALLBACK(Popup::getInstance), ffbutton);
+                g_signal_connect(ffbutton, "button-press-event", G_CALLBACK(FfButtonPopupMenu::initFfButtonPopupMenu), NULL);
                 g_signal_connect(ffbutton, "clicked", G_CALLBACK(ffClickedF), ffbutton);
                 g_signal_connect(ffbutton, "pressed", G_CALLBACK(ffPressedF), ffbutton);
                 g_signal_connect(ffbutton, "clicked", G_CALLBACK(ffClickedorPressedF), ffbutton);
