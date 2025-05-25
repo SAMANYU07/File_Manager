@@ -80,6 +80,19 @@ public:
                 g_list_free(children);
                 return label;
         }
+        static GtkWidget *extractButtonFromButton(GtkWidget *button)
+        {
+                GtkWidget *parent = gtk_widget_get_parent(button);
+                while (parent != nullptr)
+                {
+                        if (GTK_IS_BUTTON(parent))
+                        return parent;
+
+                        parent = gtk_widget_get_parent(parent);
+                }
+                return nullptr;
+        }
+
         static void on_entering_ffButton(GtkWidget *button, GdkEvent *event, gpointer data)
         {
                 const gchar *new_label = static_cast<const gchar *>(data);

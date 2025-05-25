@@ -423,6 +423,23 @@ void ffpaneInsert(std::string ffList)
         pathRibbonComponent::updateAddressBar(currentPath);
 }
 
+void ffButtonPopupMenuHandler(GtkWidget *w, gpointer data)
+{
+        ButtonActionPayload *payload = static_cast<ButtonActionPayload*>(data);
+        if (payload->action == COPY_ACTION)
+        {
+                ribbonComponent::toggleCopyMode();
+                FfButtonPopupMenu::deletePopover(nullptr, nullptr);
+                ffButtonPreProcessing(payload->button);
+        }
+        else if (payload->action == DELETE_ACTION)
+        {
+                ribbonComponent::toggleDeleteMode();
+                FfButtonPopupMenu::deletePopover(nullptr, nullptr);
+                ffButtonPreProcessing(payload->button);
+        }
+}
+
 
 void createNewFolder(GtkWidget *w)
 {

@@ -1,8 +1,20 @@
 #include <iostream>
 #include <gtk-3.0/gtk/gtk.h>
 
+#define COPY_ACTION 0
+#define DELETE_ACTION 2
 
 GtkWidget *popover = nullptr;
+
+void ffButtonPopupMenuHandler(GtkWidget *w, gpointer data);
+
+struct ButtonActionPayload
+{
+    GtkWidget *button;
+    int action;
+    ButtonActionPayload(GtkWidget *button, int action): button(button), action(action) {}
+};
+
 
 class FfButtonPopupMenu {
 public:
@@ -27,12 +39,18 @@ public:
         gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
 
         // Optional: add a button to close the popover
-        GtkWidget *close_btn = gtk_button_new_with_label("Close");
+        // GtkWidget *close_btn = gtk_button_new_with_label("Close");
         GtkWidget *copyButton = gtk_button_new_with_label("Copy");
-        gtk_box_pack_start(GTK_BOX(box), close_btn, FALSE, FALSE, 0);
+        GtkWidget *deleteButton = gtk_button_new_with_label("Delete");
+        // gtk_box_pack_start(GTK_BOX(box), close_btn, FALSE, FALSE, 0);
         gtk_box_pack_start(GTK_BOX(box), copyButton, false, false, 0);
-        g_signal_connect(close_btn, "clicked", G_CALLBACK(deletePopover), nullptr);
-        g_signal_connect(copyButton, "clicked", G_CALLBACK(deletePopover), nullptr);
+        gtk_box_pack_start(GTK_BOX(box), deleteButton, false, false, 0);
+        // g_signal_connect(close_btn, "clicked", G_CALLBACK(deletePopover), nullptr);
+        ButtonActionPayload *copyPayload = new ButtonActionPayload(widget, COPY_ACTION);
+        ButtonActionPayload *deletePayload = new ButtonActionPayload(widget, DELETE_ACTION);
+        g_signal_connect(copyButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), copyPayload);
+        g_signal_connect(deleteButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), deletePayload);
+        // g_signal_connect(copyButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), GINT_TO_POINTER(COPY_ACTION));
 
         gtk_container_add(GTK_CONTAINER(popover), box);
         gtk_widget_show_all(popover);
