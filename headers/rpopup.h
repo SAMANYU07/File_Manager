@@ -6,6 +6,7 @@
 
 void ffpaneInsert(std::string);
 void createNewFolder(GtkWidget*w);
+static void pasteFF();
 
 std::string stringToBeSent = "";
 
@@ -80,6 +81,13 @@ private:
                         g_signal_connect(menuOption3, "activate", G_CALLBACK(menuOption3f), NULL);
                         g_signal_connect(menuOption4, "activate", G_CALLBACK(menuOption4f), NULL);
                         g_signal_connect(menuOption5, "activate", G_CALLBACK(openTerminal), NULL);
+                        if (pasteMode)
+                        {
+                                GtkWidget *menuOption6 = gtk_menu_item_new_with_label("Paste");
+                                gtk_widget_set_name(menuOption6, "menuOption");
+                                gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption6);
+                                g_signal_connect(menuOption6, "activate", G_CALLBACK(pasteFF), NULL);
+                        }
                         g_signal_connect(menu, "deactivate", G_CALLBACK(PopupDelete), NULL);
                         gtk_widget_show_all(menu);
                         gtk_menu_popup_at_pointer(GTK_MENU(menu), (GdkEvent *)event);
