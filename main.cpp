@@ -128,6 +128,7 @@ int ffButtonPreProcessing(GtkWidget *w)
         if (compressMode)
         {
                 ribbonComponent::compressFile(currentPath + "/'" + (ggh::extractLabelFromButton(w)).substr(0, (ggh::extractLabelFromButton(w)).size()) + "'");
+                refreshButtonfunc();
                 compressMode = 0;
                 return -1;
         }
@@ -435,6 +436,12 @@ void ffButtonPopupMenuHandler(GtkWidget *w, gpointer data)
         else if (payload->action == DELETE_ACTION)
         {
                 ribbonComponent::toggleDeleteMode();
+                FfButtonPopupMenu::deletePopover(nullptr, nullptr);
+                ffButtonPreProcessing(payload->button);
+        }
+        else if (payload->action == COMPRESS_ACTION)
+        {
+                ribbonComponent::toggleCompressMode();
                 FfButtonPopupMenu::deletePopover(nullptr, nullptr);
                 ffButtonPreProcessing(payload->button);
         }
