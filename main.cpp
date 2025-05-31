@@ -453,6 +453,11 @@ void ffButtonPopupMenuHandler(GtkWidget *w, gpointer data)
                 ribbonComponent::toggleRenameMode();
                 ffButtonPreProcessing(payload->button);
         }
+        else if (payload->action == CUT_ACTION)
+        {
+                ribbonComponent::toggleCutMode();
+                ffButtonPreProcessing(payload->button);
+        }
         ggh::exchangeVisibleAndHiddenLabel(payload->button);
         FfButtonPopupMenu::deletePopover(nullptr, nullptr);
 }

@@ -5,6 +5,7 @@
 #define COMPRESS_ACTION 1
 #define DELETE_ACTION 2
 #define RENAME_ACTION 3
+#define CUT_ACTION 4
 
 GtkWidget *popover = nullptr;
 
@@ -41,20 +42,24 @@ public:
         gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
         // GtkWidget *close_btn = gtk_button_new_with_label("Close");
         GtkWidget *copyButton = gtk_button_new_with_label("Copy");
+        GtkWidget *cutButton = gtk_button_new_with_label("Cut");
         GtkWidget *deleteButton = gtk_button_new_with_label("Delete");
         GtkWidget *renameButton = gtk_button_new_with_label("Rename");
         GtkWidget *compressButton = gtk_button_new_with_label("Compress");
         // gtk_box_pack_start(GTK_BOX(box), close_btn, FALSE, FALSE, 0);
         gtk_box_pack_start(GTK_BOX(box), copyButton, false, false, 0);
+        gtk_box_pack_start(GTK_BOX(box), cutButton, false, false, 0);
         gtk_box_pack_start(GTK_BOX(box), deleteButton, false, false, 0);
         gtk_box_pack_start(GTK_BOX(box), renameButton, false, false, 0);
         gtk_box_pack_start(GTK_BOX(box), compressButton, false, false, 0);
         // g_signal_connect(close_btn, "clicked", G_CALLBACK(deletePopover), nullptr);
         ButtonActionPayload *copyPayload = new ButtonActionPayload(widget, COPY_ACTION);
+        ButtonActionPayload *cutPayload = new ButtonActionPayload(widget, CUT_ACTION);
         ButtonActionPayload *deletePayload = new ButtonActionPayload(widget, DELETE_ACTION);
         ButtonActionPayload *renamePayload = new ButtonActionPayload(widget, RENAME_ACTION);
         ButtonActionPayload *compressPayload = new ButtonActionPayload(widget, COMPRESS_ACTION);
         g_signal_connect(copyButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), copyPayload);
+        g_signal_connect(cutButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), cutPayload);
         g_signal_connect(deleteButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), deletePayload);
         g_signal_connect(renameButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), renamePayload);
         g_signal_connect(compressButton, "clicked", G_CALLBACK(ffButtonPopupMenuHandler), compressPayload);
