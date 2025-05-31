@@ -24,7 +24,7 @@ public:
     static void deletePopover(GtkWidget *widget, gpointer data) {
         std::cout << "delete_popover\n";
         if (instance != nullptr) {
-            gtk_widget_destroy(popover);  // Properly destroy the widget
+            gtk_widget_destroy(popover);
             delete instance;
             instance = nullptr;
         }
@@ -33,13 +33,11 @@ public:
     FfButtonPopupMenu(GtkWidget *widget, GdkEventButton *event) {
         popover = gtk_popover_new(widget);
         gtk_popover_set_position(GTK_POPOVER(popover), GTK_POS_BOTTOM);
-        gtk_popover_set_modal(GTK_POPOVER(popover), TRUE); // Optional, helps keep it open
+        gtk_popover_set_modal(GTK_POPOVER(popover), TRUE);
 
         GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
         GtkWidget *label = gtk_label_new("Options:");
         gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
-
-        // Optional: add a button to close the popover
         // GtkWidget *close_btn = gtk_button_new_with_label("Close");
         GtkWidget *copyButton = gtk_button_new_with_label("Copy");
         GtkWidget *deleteButton = gtk_button_new_with_label("Delete");

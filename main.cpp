@@ -206,7 +206,10 @@ int ffButtonHoldFunc(GtkWidget *w)
         if (ffClicked)
                 return 0;
         if (ffButtonPreProcessing(w) == -1)
+        {
+                ggh::exchangeVisibleAndHiddenLabel(w);
                 return -1;
+        }
         if (ggh::isFile(targetPath) == 1)
         {
                 currentFile = targetPath;
@@ -244,7 +247,10 @@ int ffButtonFunc(GtkWidget *w, GdkEventButton *event)
                 return 0;
         }
         if (ffButtonPreProcessing(w) == -1)
+        {
+                ggh::exchangeVisibleAndHiddenLabel(w);
                 return -1;
+        }
         if (ggh::isFile(targetPath) == 1)
         {
                 // std::cout << 1 << "\n";
@@ -430,21 +436,20 @@ void ffButtonPopupMenuHandler(GtkWidget *w, gpointer data)
         if (payload->action == COPY_ACTION)
         {
                 ribbonComponent::toggleCopyMode();
-                FfButtonPopupMenu::deletePopover(nullptr, nullptr);
                 ffButtonPreProcessing(payload->button);
         }
         else if (payload->action == DELETE_ACTION)
         {
                 ribbonComponent::toggleDeleteMode();
-                FfButtonPopupMenu::deletePopover(nullptr, nullptr);
                 ffButtonPreProcessing(payload->button);
         }
         else if (payload->action == COMPRESS_ACTION)
         {
                 ribbonComponent::toggleCompressMode();
-                FfButtonPopupMenu::deletePopover(nullptr, nullptr);
                 ffButtonPreProcessing(payload->button);
         }
+        ggh::exchangeVisibleAndHiddenLabel(payload->button);
+        FfButtonPopupMenu::deletePopover(nullptr, nullptr);
 }
 
 
