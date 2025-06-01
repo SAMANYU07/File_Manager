@@ -354,6 +354,12 @@ gboolean ffPressedF(GtkWidget *w, GdkEventButton *event)
         return false;
 }
 
+void ffRemoveReveal(GtkWidget *button)
+{
+        gtk_style_context_remove_class(gtk_widget_get_style_context(button), "ffbutton_before");
+        gtk_style_context_add_class(gtk_widget_get_style_context(button), "ffbutton_after");
+}
+
 void ffpaneInsert(std::string ffList)
 {
         if (f == 0)
@@ -419,6 +425,7 @@ void ffpaneInsert(std::string ffList)
                 // g_signal_connect(ffbutton, "enter-notify-event", G_CALLBACK(ggh::on_entering_ffButton), g_strdup(ffname.c_str()));
                 // g_signal_connect(ffbutton, "leave-notify-event", G_CALLBACK(ggh::on_leaving_ffButton), g_strdup(truncatedLabel.c_str()));
                 gtk_widget_set_name(ffbutton, "ffbutton");
+                // ffRemoveReveal(ffbutton);
                 // g_signal_connect(ffbutton, "button-press-event", G_CALLBACK(Popup::getInstance), ffbutton);
                 g_signal_connect(ffbutton, "button-press-event", G_CALLBACK(FfButtonPopupMenu::initFfButtonPopupMenu), ffbutton);
                 g_signal_connect(ffbutton, "clicked", G_CALLBACK(ffClickedF), ffbutton);
@@ -434,30 +441,16 @@ void ffButtonPopupMenuHandler(GtkWidget *w, gpointer data)
 {
         ButtonActionPayload *payload = static_cast<ButtonActionPayload*>(data);
         if (payload->action == COPY_ACTION)
-        {
                 ribbonComponent::toggleCopyMode();
-                ffButtonPreProcessing(payload->button);
-        }
         else if (payload->action == DELETE_ACTION)
-        {
                 ribbonComponent::toggleDeleteMode();
-                ffButtonPreProcessing(payload->button);
-        }
         else if (payload->action == COMPRESS_ACTION)
-        {
                 ribbonComponent::toggleCompressMode();
-                ffButtonPreProcessing(payload->button);
-        }
         else if (payload->action == RENAME_ACTION)
-        {
                 ribbonComponent::toggleRenameMode();
-                ffButtonPreProcessing(payload->button);
-        }
         else if (payload->action == CUT_ACTION)
-        {
                 ribbonComponent::toggleCutMode();
-                ffButtonPreProcessing(payload->button);
-        }
+        ffButtonPreProcessing(payload->button);
         ggh::exchangeVisibleAndHiddenLabel(payload->button);
         FfButtonPopupMenu::deletePopover(nullptr, nullptr);
 }
@@ -679,7 +672,7 @@ int main(int argc, char *argv[])
         gtk_widget_set_size_request(searchButton, 100, 30);
         gtk_widget_set_size_request(scwin2, 1488, 200);
         gtk_widget_show_all(win);
-        gtk_window_set_title(GTK_WINDOW(win), "File Explorer 0.5");
+        gtk_window_set_title(GTK_WINDOW(win), "File Explorer 0.6");
         currentPath = "/'home'/'" + username + "'/";
         ffpaneInsert(runcomm("ls /home/" + username));
         gtk_main();
