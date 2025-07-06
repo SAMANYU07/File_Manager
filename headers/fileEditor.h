@@ -94,6 +94,7 @@ class fileEditor
                 gtk_text_buffer_set_text(GTK_TEXT_BUFFER(fileBuffer), fileData.c_str(), fileData.size());
                 fp.close();
                 g_signal_connect(undoChangesButton, "clicked", G_CALLBACK(reloadFile), NULL);
+                gtk_widget_set_name(scwin2, "scwin2");
                 gtk_widget_set_can_focus(filePreviewer, true);
         }
 
@@ -120,5 +121,6 @@ class fileEditor
                 GdkColor scwin2bgcolor;
                 gdk_color_parse("#141414", &scwin2bgcolor);
                 gtk_widget_modify_bg(filePreviewer, GTK_STATE_NORMAL, &scwin2bgcolor);
+                gtk_widget_set_name(filePreviewer, "filePreviewer");
         }
 };

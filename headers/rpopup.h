@@ -74,6 +74,7 @@ private:
                         gtk_widget_set_name(menuOption3, "menuOption");
                         gtk_widget_set_name(menuOption4, "menuOption");
                         gtk_widget_set_name(menuOption5, "menuOption");
+                        gtk_widget_set_name(menu, "rpopup");
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption0);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption1);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption2);

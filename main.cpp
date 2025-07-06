@@ -75,7 +75,8 @@ static void pasteFF()
 
 void backButtonfunc()
 {
-        gtk_text_buffer_set_text(GTK_TEXT_BUFFER(fileBuffer), "", 0);
+        gtk_text_buffer_set_text(GTK_TEXT_BUFFER(fileBuffer), "", 0); 
+        gtk_widget_set_name(scwin2, "");
         // currentPath= currentPath.substr(0, indexOfLastFolder);
         if (slashpos.size() == 1)
                 return;
@@ -225,6 +226,8 @@ int ffButtonHoldFunc(GtkWidget *w)
                 // std::cout << targetPath << "\n";
                 gtk_widget_set_can_focus(filePreviewer, false);
                 gtk_text_buffer_set_text(fileBuffer, "", 0);
+                gtk_widget_set_name(scwin2, "");
+
                 currentPath = targetPath;
                 pathRibbonComponent::updateslashpos();
                 ffpaneInsert(runcomm("ls " + currentPath));
@@ -293,6 +296,7 @@ int ffButtonFunc(GtkWidget *w, GdkEventButton *event)
                 // std::cout << targetPath << "\n";
                 gtk_widget_set_can_focus(filePreviewer, false);
                 gtk_text_buffer_set_text(fileBuffer, "", 0);
+                gtk_widget_set_name(scwin2, "");
                 currentPath = targetPath;
                 pathRibbonComponent::updateslashpos();
                 ffpaneInsert(runcomm("ls " + currentPath));
@@ -540,6 +544,7 @@ std::string openFolder(std::string targetPath)
                 // ffpaneInsert(runcomm("ls /media/" + username + "/"+diskNameVector[diskNameVector.size()-1]));
         }
         gtk_text_buffer_set_text(GTK_TEXT_BUFFER(fileBuffer), "", 0);
+        gtk_widget_set_name(scwin2, "");
 }
 // static int navPaneIns()
 
@@ -556,7 +561,7 @@ void addcss()
         gtk_widget_set_name(ribbon, "ribbon");
         gtk_widget_set_name(scwin, "scwin");
         gtk_widget_set_name(win, "win");
-        gtk_widget_set_name(scwin2, "scwin2");
+        // gtk_widget_set_name(scwin2, "scwin2");
         gtk_widget_set_name(ribbon, "ribbon");
 
         gtk_widget_set_name(makeFolderButton, "makeFolderButton");

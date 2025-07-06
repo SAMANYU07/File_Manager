@@ -25,6 +25,7 @@
 }
 #makeFolderButton:hover, #makeFileButton:hover, #copyButton:hover, #cutButton:hover, #pasteButton:hover, #deleteButton:hover, #refreshButton:hover, #renameButton:hover, #compressButton:hover, #undoChangesButton:hover, #saveChangesButton:hover, #backButton:hover, #createButton:hover, #searchButton:hover {
         /* margin-left: 10px; */
+        /* color: aqua; */
         background-color: rgb(36, 36, 36);
 }
 #makeFolderButton:active, #makeFileButton:active, #copyButton:active, #cutButton:active, #pasteButton:active, #deleteButton:active, #refreshButton:active, #renameButton:active, #compressButton:active, #undoChangesButton:active, #saveChangesButton:active, #backButton:active, #createButton:active, #searchButton:active {
@@ -58,6 +59,9 @@
 }
 #searchEntry:focus {
         border-color: aqua;
+}
+#tempelem:hover {
+        color: aqua;
 }
 #tempelem:selected {
         color: black;
@@ -106,7 +110,10 @@
         border-radius: 0px;
 }
 #scwin2 {
-        background-color: aqua;
+        border: 2px solid aqua;
+        border-radius: 8px;
+        transition: 400ms;
+        padding: 1px;
 }
 #rpopup:hover {
         background-color: white;
@@ -115,4 +122,10 @@
 #menuOption:hover {
         background-color: white;
         color: black;
+}
+#contextMenu {
+        background-color: rgb(17, 17, 17);
+}
+#contextMenuItem:hover {
+        background-color: aqua;
 }
