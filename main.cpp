@@ -19,6 +19,7 @@
 #include "headers/imageViewer.h"
 #include "headers/videoPlayer.h"
 #include "headers/rpopup.h"
+#include "headers/PropertiesPanel.h"
 // #include "headers/ffbuttonContextMenu.h"
 
 GtkWidget *win, *table1, *ribbon, *mypcDropDown, *testButton, *homeBtn, *docBtn, *musicBtn, *videoBtn, *pictureBtn, *temp, *ffpane, *scwin, *ffbutton;
@@ -310,7 +311,7 @@ int ffButtonFunc(GtkWidget *w, GdkEventButton *event)
 gboolean ffButtonPressed(GtkWidget *w)
 {
         std::cout << "ffButtonPressed exec...\n";
-        hold_timer_id = g_timeout_add(280, (GSourceFunc)ffButtonHoldFunc, w);
+          hold_timer_id = g_timeout_add(280, (GSourceFunc)ffButtonHoldFunc, w);
         g_signal_connect(win, "focus-out-event", G_CALLBACK(g_source_remove), &hold_timer_id);
         return false;
 }
@@ -454,7 +455,15 @@ void ffButtonPopupMenuHandler(GtkWidget *w, gpointer data)
                 ribbonComponent::toggleRenameMode();
         else if (payload->action == CUT_ACTION)
                 ribbonComponent::toggleCutMode();
-        ffButtonPreProcessing(payload->button);
+        if (payload->action == PROPERTIES_ACTION)
+        {
+                PropertiesPanel panel;
+        ggh::exchangeVisibleAndHiddenLabel(payload->button);
+                std::string fileName = ggh::extractLabelFromButton(payload->button);
+                panel.PropertiesPanel_init(fileName, currentPath);
+        }
+        else
+                ffButtonPreProcessing(payload->button);
         ggh::exchangeVisibleAndHiddenLabel(payload->button);
         FfButtonPopupMenu::deletePopover(nullptr, nullptr);
 }
