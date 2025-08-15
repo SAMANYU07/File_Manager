@@ -12,14 +12,15 @@
 #include <libgen.h>
 #include <thread>
 #include <X11/Xlib.h>
-#include "headers/navPane.h"
-#include "headers/ribbon.h"
-#include "headers/pathRibbon.h"
-#include "headers/fileEditor.h"
-#include "headers/imageViewer.h"
-#include "headers/videoPlayer.h"
-#include "headers/rpopup.h"
-#include "headers/PropertiesPanel.h"
+#include "headers/ConfigManager/ConfigHandler.h"
+#include "headers/UIComponents/navPane.h"
+#include "headers/UIComponents/ribbon.h"
+#include "headers/UIComponents/pathRibbon.h"
+#include "headers/UIComponents/fileEditor.h"
+#include "headers/UIComponents/imageViewer.h"
+#include "headers/UIComponents/videoPlayer.h"
+#include "headers/UIComponents/rpopup.h"
+#include "headers/UIComponents/PropertiesPanel.h"
 // #include "headers/ffbuttonContextMenu.h"
 
 GtkWidget *win, *table1, *ribbon, *mypcDropDown, *testButton, *homeBtn, *docBtn, *musicBtn, *videoBtn, *pictureBtn, *temp, *ffpane, *scwin, *ffbutton;
@@ -602,6 +603,9 @@ void addcss()
 int main(int argc, char *argv[])
 {
         XInitThreads();
+        ConfigHandler configHandler;
+        configHandler.loadConfigFile();
+        configHandler.createConfigFile();
         gtk_init(&argc, &argv);
         createNavPane();
         ribbonComponent::createRibbbon();
