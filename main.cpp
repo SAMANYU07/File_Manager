@@ -12,7 +12,7 @@
 #include <libgen.h>
 #include <thread>
 #include <X11/Xlib.h>
-#include "headers/ConfigManager/ConfigHandler.h"
+#include "headers/ConfigManager/ConfigManager.h"
 #include "headers/UIComponents/navPane.h"
 #include "headers/UIComponents/ribbon.h"
 #include "headers/UIComponents/pathRibbon.h"
@@ -603,9 +603,11 @@ void addcss()
 int main(int argc, char *argv[])
 {
         XInitThreads();
-        ConfigHandler configHandler;
-        configHandler.loadConfigFile();
-        configHandler.createConfigFile();
+        // ConfigHandler configHandler;
+        // configHandler.loadConfigFile();
+        // configHandler.createConfigFile();
+        ConfigManager *configManager = ConfigManager::getInstance();
+        std::map<std::string, std::string> configMap = configManager->getAppConfig();
         gtk_init(&argc, &argv);
         createNavPane();
         ribbonComponent::createRibbbon();
