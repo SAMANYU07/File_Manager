@@ -129,3 +129,9 @@
 #contextMenuItem:hover {
         background-color: aqua;
 }
+#GtkToggleButton:checked {
+        background-color: rgb(78, 173, 123);
+}
+#GtkToggleButton {
+        background-color: rgb(68, 42, 42);
+}

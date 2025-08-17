@@ -3,6 +3,7 @@
 #include "pathRibbon.h"
 #include "navPane.h"
 #include "ffbuttonContextMenu.h"
+#include "SettingsPanel.h"
 
 void ffpaneInsert(std::string);
 void createNewFolder(GtkWidget*w);
@@ -50,6 +51,10 @@ private:
                 ggh::runcomm("konsole --workdir " + currentPath);
                 std::cout << "openTerminal() exec\n";
         }
+        static void openSettingsPanel()
+        {
+                SettingsPanel settingsPanel;
+        }
         Popup(GtkWidget *widget, GdkEventButton *event, gpointer user_data)
         {
                 // std::cout << "Code to run once\n";
@@ -68,12 +73,14 @@ private:
                         GtkWidget *menuOption3 = gtk_menu_item_new_with_label("Create New Folder");
                         GtkWidget *menuOption4 = gtk_menu_item_new_with_label("Create New File");
                         GtkWidget *menuOption5 = gtk_menu_item_new_with_label("Open Terminal here (KDE)");
+                        GtkWidget *menuOption6 = gtk_menu_item_new_with_label("Preferences");
                         gtk_widget_set_name(menuOption0, "menuOption");
                         gtk_widget_set_name(menuOption1, "menuOption");
                         gtk_widget_set_name(menuOption2, "menuOption");
                         gtk_widget_set_name(menuOption3, "menuOption");
                         gtk_widget_set_name(menuOption4, "menuOption");
                         gtk_widget_set_name(menuOption5, "menuOption");
+                        gtk_widget_set_name(menuOption6, "menuOption");
                         gtk_widget_set_name(menu, "rpopup");
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption0);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption1);
@@ -81,12 +88,14 @@ private:
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption3);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption4);
                         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption5);
+                        gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuOption6);
                         g_signal_connect(menuOption0, "activate", G_CALLBACK(refreshButtonfunc), NULL);
                         g_signal_connect(menuOption1, "activate", G_CALLBACK(ArrangeByName), NULL);
                         g_signal_connect(menuOption2, "activate", G_CALLBACK(ArrangeByDate), NULL);
                         g_signal_connect(menuOption3, "activate", G_CALLBACK(menuOption3f), NULL);
                         g_signal_connect(menuOption4, "activate", G_CALLBACK(menuOption4f), NULL);
                         g_signal_connect(menuOption5, "activate", G_CALLBACK(openTerminal), NULL);
+                        g_signal_connect(menuOption6, "activate", G_CALLBACK(openSettingsPanel), NULL);
                         if (pasteMode)
                         {
                                 GtkWidget *menuOption6 = gtk_menu_item_new_with_label("Paste");
