@@ -64,5 +64,19 @@ class ConfigHandler
                         return v;
                 }
         }
+
+        void updateConfigValue(std::string groupName, std::string key, std::string value)
+        {
+                if (!configFileExists(CONFIG_FILE_NAME))
+                        return;
+                const gchar *grpName = groupName.c_str();
+                const gchar *Key = key.c_str();
+                const gchar *val = value.c_str();
+                g_autoptr(GError) error = NULL;
+                std::cout << "values to update: " << grpName << " " << Key << " " << val;
+                g_key_file_set_string(keyFile, grpName, Key, val);
+                if (!g_key_file_save_to_file(keyFile, CONFIG_FILE_NAME, NULL))
+                        g_warning("Failed to write config file\n");
+        }
       
 };
